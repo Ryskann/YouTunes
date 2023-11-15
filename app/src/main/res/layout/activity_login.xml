@@ -7,11 +7,15 @@
     android:orientation="vertical">
 
     <ImageView
-        android:src="@drawable/youtunes_logo"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/loading" />
+
+    <Button
+        android:id="@+id/button_force_connection_to_spotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        />
+
+        android:text="forcer la connexion à spotify" />
 
 </LinearLayout>
