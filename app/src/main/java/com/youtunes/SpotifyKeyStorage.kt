@@ -12,32 +12,25 @@ import org.json.JSONObject
 import kotlinx.coroutines.flow.first
 
 
-class SpotifyKeyStorage(context:Context) {
-    private val Context.dataStore by preferencesDataStore(name = "spotify_preferences")
-    private val dataStore: DataStore<Preferences> = context.dataStore
+class SpotifyKeyStorage() {
     private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
     private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
+
+    companion object {
+        private lateinit var bearer: String
+        private lateinit var refresher: String
+
+        @JvmStatic fun getBearer(): String {
+            return bearer;
+        }
+
+        @JvmStatic fun getRefrecher(): String {
+            return refresher;
+        }
+    }
+
     fun writeSpotifyKey(jsonData: JSONObject){
-        val accessToken=jsonData["access_token"]
-        val refreshToken=jsonData["refresh_token"]
-
-        runBlocking {
-            dataStore.edit { data ->
-                data[ACCESS_TOKEN_KEY] = accessToken.toString()
-                data[REFRESH_TOKEN_KEY] = refreshToken.toString()
-            }
-        }
-    }
-
-    fun readSpotifyAccessToken():String{
-        return runBlocking {
-            dataStore.data.first()[ACCESS_TOKEN_KEY] ?: ""
-        }
-    }
-
-    fun readSpotifyRefreshToken(): String {
-        return runBlocking {
-            dataStore.data.first()[REFRESH_TOKEN_KEY] ?: ""
-        }
+        bearer =jsonData["access_token"].toString()
+        refresher =jsonData["refresh_token"].toString()
     }
 }
