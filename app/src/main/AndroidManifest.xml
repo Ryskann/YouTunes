@@ -35,6 +35,10 @@
                 <data android:scheme="com.youtune" android:host="spotify-callback" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".YourSummaryListActivity"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

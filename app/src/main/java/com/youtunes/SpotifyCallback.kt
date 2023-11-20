@@ -2,6 +2,7 @@ package com.youtunes
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
@@ -26,11 +27,9 @@ class SpotifyCallback() :AppCompatActivity(){
     private val redirect_uri = "com.youtune://spotify-callback";
     private lateinit var spotifyKeyStorage: SpotifyKeyStorage
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        spotifyKeyStorage = SpotifyKeyStorage(applicationContext)
+        spotifyKeyStorage = SpotifyKeyStorage()
 
         val code=intent.data?.getQueryParameter("code")
         val state=intent.data?.getQueryParameter("state");
@@ -73,7 +72,9 @@ class SpotifyCallback() :AppCompatActivity(){
         }
 
         override fun onPostExecute(result: Unit) {
-            // Actions après la récupération du jeton, si nécessaire
+            val intentPostExecution = Intent(this@SpotifyCallback, YourSummaryListActivity::class.java)
+            startActivity(intentPostExecution)
+            finish()
         }
     }
 
