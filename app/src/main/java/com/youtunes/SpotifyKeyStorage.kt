@@ -1,36 +1,63 @@
 package com.youtunes
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
+
+import android.content.ContentValues.TAG
+import android.util.Log
 import org.json.JSONObject
-import kotlinx.coroutines.flow.first
+import java.io.File
 
 
 class SpotifyKeyStorage() {
-    private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
-    private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
-
     companion object {
-        private lateinit var bearer: String
-        private lateinit var refresher: String
+        @JvmStatic
+        fun getRefrecher(fileDir: File): String {
+            var refreshToken = ""
+            try {
+                val file = File(fileDir, "SpotifyToken")
+                if(file.exists()) {
+                    Log.w(TAG, fileDir.toString())
+                    var content = file.readText()
+                    val refreshTokenRegex = """refresh_token=([^\n]+)""".toRegex()
+                    val refreshTokenMatch = refreshTokenRegex.find(content)
+                    refreshToken = refreshTokenMatch?.groupValues?.getOrNull(1) ?: ""
+                }
+            } catch (error: Error) {
 
-        @JvmStatic fun getBearer(): String {
-            return bearer;
+            }
+            return refreshToken;
         }
 
-        @JvmStatic fun getRefrecher(): String {
-            return refresher;
-        }
-    }
+        @JvmStatic
+        fun getBearer(fileDir: File): String {
+            var accessToken = ""
+            try {
+                val file = File(fileDir, "SpotifyToken")
+                if(file.exists()) {
+                    var content = file.readText()
+                    val accessTokenRegex = """access_token=([^\n]+)""".toRegex()
+                    val accessTokenMatch = accessTokenRegex.find(content)
+                    accessToken = accessTokenMatch?.groupValues?.getOrNull(1) ?: ""
+                }
+            } catch (error: Error) {
 
-    fun writeSpotifyKey(jsonData: JSONObject){
-        bearer =jsonData["access_token"].toString()
-        refresher =jsonData["refresh_token"].toString()
+            }
+            return accessToken;
+        }
+
+        @JvmStatic
+        fun writeSpotifyKey(jsonData: JSONObject, fileDir: File) {
+            try {
+                val file = File(fileDir, "SpotifyToken")
+                val accesToken = jsonData["access_token"].toString()
+                val refresh_token = jsonData.optString("refresh_token", "")
+                if(refresh_token!="")
+                    file.writeText("access_token=" + accesToken + "\nrefresh_token=" + refresh_token + "\n")
+                else
+                    file.writeText("access_token=" + accesToken + "\n")
+
+            } catch (error: Error) {
+
+            }
+        }
     }
 }
