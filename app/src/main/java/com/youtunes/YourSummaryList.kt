@@ -10,6 +10,6 @@ class YourSummaryListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_summary);
         fileDir = this.filesDir
-        RemoteResources().getFavouriteArtists(1, fileDir)
+        RemoteResources().getFavouriteArtists(10,"short_term",fileDir)
     }
 }

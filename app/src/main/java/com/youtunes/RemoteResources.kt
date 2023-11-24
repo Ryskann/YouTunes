@@ -15,11 +15,11 @@ class RemoteResources: AppCompatActivity() {
     data class Artist(val name: String)
     data class Event(val name: String)
 
-     fun getFavouriteArtists(limit: Int = 10, fileDir: File): List<Artist> {
+     fun getFavouriteArtists(limit: Int = 10, time_range:String="short_term",fileDir: File): List<Artist> {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val request = Request.Builder()
-                    .url("https://api.spotify.com/v1/me/top/artists")
+                    .url("""https://api.spotify.com/v1/me/top/artists?time_range=$time_range&limit=$limit""")
                     .addHeader("Authorization", "Bearer " + SpotifyKeyStorage.getBearer(fileDir))
                     .build()
 
