@@ -52,6 +52,5 @@ dependencies {
 
     // dependance custom
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation("androidx.datastore:datastore-preferences:1.0.0") // utilisé pour stocker les données ceci est conseiller par android https://developer.android.com/topic/libraries/architecture/datastore?hl=fr
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 }
