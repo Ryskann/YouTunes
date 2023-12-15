@@ -11,11 +11,10 @@ import org.json.JSONObject
 import java.io.File
 
 class ArtistViewModel : ViewModel() {
-    private val _name = MutableLiveData<String>()
-    val name: LiveData<String>
-        get() = _name
+    private val _artistData = MutableLiveData<List<Artist>>()
+    val artistData: LiveData<List<Artist>>
+        get() = _artistData
 
-    data class Artist(val name: String, val imageSrc: String)
     data class Event(val name: String)
 
     fun getFavouriteArtists(limit: Int = 10, timeRange: String = "short_term", fileDir: File) {
@@ -28,12 +27,12 @@ class ArtistViewModel : ViewModel() {
                 val artistData = jsonResponse.getJSONArray("items").getJSONObject(i)
                 val artist = Artist(
                     artistData.getString("name"),
-                    artistData.getJSONArray("images").getJSONObject(0).getString("url")
+                    artistData.getJSONArray("images").getJSONObject( artistData.getJSONArray("images").length()-1).getString("url")
                 )
                 artistList.add(artist)
             }
             withContext(Dispatchers.Main) {
-                _name.value = artistList.get(0).name
+                _artistData.value = artistList
             }
         }
 
