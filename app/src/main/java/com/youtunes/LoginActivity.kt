@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
         fileDir = this.filesDir
         if (ChecksIfTheUseHasASecretId(fileDir)) {
             val intent = Intent(this@LoginActivity, SpotifyCallback::class.java)
