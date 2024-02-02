@@ -2,6 +2,7 @@ package com.youtunes
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Log
@@ -10,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 import java.net.URI
@@ -35,6 +38,12 @@ class ArtistItemAdapter(private val context: Context,private val dataset:List<Ar
         val item = dataset[position]
         holder.artistName.text = item.name
         val imageUrl = item.imageSrc
+
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, EventDetailsActivity::class.java)
+            intent.putExtra("keyword", item.name)
+            context.startActivity(intent)
+        }
 
         Glide.with(context)
             .load(imageUrl)

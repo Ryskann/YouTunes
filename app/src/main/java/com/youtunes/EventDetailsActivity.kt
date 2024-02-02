@@ -6,18 +6,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import java.io.File
 
-class YourSummaryListActivity : AppCompatActivity() {
+class EventDetailsActivity : AppCompatActivity() {
     private lateinit var fileDir: File;
-    private lateinit var artistViewModel: ArtistViewModel
+    private lateinit var eventViewModel: EventViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val keyword: String = intent.extras!!.getString("keyword", "Mother Mother")
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         fileDir = this.filesDir
         val recyclerView=findViewById<RecyclerView>(R.id.recycle_view)
-        artistViewModel = ViewModelProvider(this).get(ArtistViewModel::class.java)
-        artistViewModel.artistsData.observe(this) { data ->
-            recyclerView.adapter=ArtistItemAdapter(this,data);
+        eventViewModel = ViewModelProvider(this).get(EventViewModel::class.java)
+        eventViewModel.eventsData.observe(this) { data ->
+            recyclerView.adapter=EventItemAdapter(this,data);
         }
-        artistViewModel.getFavouriteArtists(10, "short_term", fileDir)
+        eventViewModel.getArtistEvents(keyword)
     }
 }

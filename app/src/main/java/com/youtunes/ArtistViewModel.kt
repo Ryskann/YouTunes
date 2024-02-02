@@ -11,11 +11,9 @@ import org.json.JSONObject
 import java.io.File
 
 class ArtistViewModel : ViewModel() {
-    private val _artistData = MutableLiveData<List<Artist>>()
-    val artistData: LiveData<List<Artist>>
-        get() = _artistData
-
-    data class Event(val name: String)
+    private val _artistsData = MutableLiveData<List<Artist>>()
+    val artistsData: LiveData<List<Artist>>
+        get() = _artistsData
 
     fun getFavouriteArtists(limit: Int = 10, timeRange: String = "short_term", fileDir: File) {
         val artistList = ArrayList<Artist>()
@@ -32,13 +30,8 @@ class ArtistViewModel : ViewModel() {
                 artistList.add(artist)
             }
             withContext(Dispatchers.Main) {
-                _artistData.value = artistList
+                _artistsData.value = artistList
             }
         }
-
-    }
-
-    fun getArtistEvents(artist: Artist, limit: Int): List<Event> {
-        return ArrayList<Event>()
     }
 }
