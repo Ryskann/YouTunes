@@ -23,6 +23,7 @@ android {
         //definir le nom des clées api
         buildConfigField "String", "Spotify_client_id", "\"${properties.getProperty("Spotify_client_id")}\""
         buildConfigField "String", "Spotify_client_secret", "\"${properties.getProperty("Spotify_client_secret")}\""
+        buildConfigField "String", "Tiketmaster_consumer_key", "\"${properties.getProperty("Tiketmaster_consumer_key")}\""
 
     }
 
