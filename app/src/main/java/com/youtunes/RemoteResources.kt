@@ -24,7 +24,7 @@ object RemoteResources {
     suspend fun getArtistsEvents(keyword: String): String? {
         try {
             val request = Request.Builder()
-                .url("""https://app.ticketmaster.com/discovery/v2/events.json?apikey=${BuildConfig.Tiketmaster_consumer_key}&keyword=$keyword""")
+                .url("""https://app.ticketmaster.com/discovery/v2/events.json?apikey=${BuildConfig.Tiketmaster_consumer_key}&keyword=$keyword&locale=fr""")
                 .build()
 
             val result = OkHttpClient().newCall(request).execute()
