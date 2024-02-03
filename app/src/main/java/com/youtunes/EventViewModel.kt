@@ -28,7 +28,7 @@ class EventViewModel : ViewModel() {
                 for ( i in 0 until eventsJsonArray.length()) {
                     val eventData = eventsJsonArray.getJSONObject(i)
                     val event = Event(
-                        ticketMasterUrl = "a",
+                        ticketMasterUrl = eventData.getString("url"),
                         eventDate = LocalDate.parse(eventData.getJSONObject("dates").getJSONObject("start").getString("localDate")),
                         eventPlace = eventData.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getString("name"),
                         eventCity = eventData.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name") + ", " + eventData.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("country").getString("name"),

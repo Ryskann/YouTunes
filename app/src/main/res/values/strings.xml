@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YouTunes</string>
+    <string name="TM_button_content">Ticket Master</string>
 </resources>
