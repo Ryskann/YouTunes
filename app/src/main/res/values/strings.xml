@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">YouTunes</string>
     <string name="TM_button_content">Ticket Master</string>
+    <string name="no_data_alert">"Il n'y a rien à afficher ici !"</string>
 </resources>
