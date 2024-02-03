@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.time.ZonedDateTime
+import java.time.LocalDate
 
 class EventViewModel : ViewModel() {
     private val _eventsData = MutableLiveData<List<Event>>()
@@ -29,17 +29,19 @@ class EventViewModel : ViewModel() {
                     val eventData = eventsJsonArray.getJSONObject(i)
                     val event = Event(
                         ticketMasterUrl = "a",
-                        eventDate = ZonedDateTime.now(),
+                        eventDate = LocalDate.parse(eventData.getJSONObject("dates").getJSONObject("start").getString("localDate")),
                         eventPlace = eventData.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getString("name"),
                         eventCity = eventData.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("city").getString("name") + ", " + eventData.getJSONObject("_embedded").getJSONArray("venues").getJSONObject(0).getJSONObject("country").getString("name"),
                     )
                     eventsList.add(event)
                 }
             } catch (e : Exception){
+                val a = e
                 //no event
             }
 
             //TODO fill eventsList
+            val e = eventsList
 
 
             withContext(Dispatchers.Main) {
